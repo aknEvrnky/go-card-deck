@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -38,4 +39,8 @@ func (d deck) toByteSlice() []byte {
 	str := d.toString()
 
 	return []byte(str)
+}
+
+func (d deck) saveToFile(filename string) error {
+	return os.WriteFile(filename, d.toByteSlice(), 0666)
 }
