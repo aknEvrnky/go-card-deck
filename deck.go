@@ -44,3 +44,17 @@ func (d deck) toByteSlice() []byte {
 func (d deck) saveToFile(filename string) error {
 	return os.WriteFile(filename, d.toByteSlice(), 0666)
 }
+
+func fromFile(filename string) deck {
+	bytes, err := os.ReadFile(filename)
+
+	if err != nil {
+		// option #1: print the error message and force app to quit with exit code 1
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	str := strings.Split(string(bytes), "\n")
+
+	return str
+}
