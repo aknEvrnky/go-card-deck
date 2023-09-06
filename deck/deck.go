@@ -1,21 +1,22 @@
-package main
+package deck
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 )
 
-type deck []string
+type Deck []string
 
-func (d deck) print() {
+func (d Deck) print() {
 	for i, item := range d {
 		fmt.Println(i, item)
 	}
 }
 
-func newDeck() deck {
-	cards := deck{}
+func NewDeck() Deck {
+	cards := Deck{}
 
 	modifiers := [4]string{"Spades", "Diamonds", "Hearts", "Clubs"}
 	values := [13]string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Joker", "Queen", "King"}
@@ -29,23 +30,23 @@ func newDeck() deck {
 	return cards
 }
 
-func (d deck) toString() string {
+func (d Deck) ToString() string {
 	str := strings.Join(d, "\n")
 
 	return str
 }
 
-func (d deck) toByteSlice() []byte {
-	str := d.toString()
+func (d Deck) ToByteSlice() []byte {
+	str := d.ToString()
 
 	return []byte(str)
 }
 
-func (d deck) saveToFile(filename string) error {
-	return os.WriteFile(filename, d.toByteSlice(), 0666)
+func (d Deck) SaveToFile(filename string) error {
+	return os.WriteFile(filename, d.ToByteSlice(), 0666)
 }
 
-func fromFile(filename string) deck {
+func FromFile(filename string) Deck {
 	bytes, err := os.ReadFile(filename)
 
 	if err != nil {
@@ -57,4 +58,10 @@ func fromFile(filename string) deck {
 	str := strings.Split(string(bytes), "\n")
 
 	return str
+}
+
+func (d Deck) Shuffle() {
+	rand.Shuffle(len(d), func(i, j int) {
+		d[i], d[j] = d[j], d[i]
+	})
 }

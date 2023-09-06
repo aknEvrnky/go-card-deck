@@ -1,10 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"cards/deck"
+	"fmt"
+)
 
 func main() {
-	d := fromFile("data.txt")
+	d := deck.FromFile("data.txt")
 
-	fmt.Println(d.toString())
 	// cards.saveToFile("data.txt")
+	fmt.Println(d.ToString())
+	fmt.Println("After shuffling the deck")
+	d.Shuffle()
+	fmt.Println(d.ToString())
 }
