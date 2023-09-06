@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type deck []string
 
@@ -23,4 +26,16 @@ func newDeck() deck {
 	}
 
 	return cards
+}
+
+func (d deck) toString() string {
+	str := strings.Join(d, "\n")
+
+	return str
+}
+
+func (d deck) toByteSlice() []byte {
+	str := d.toString()
+
+	return []byte(str)
 }
